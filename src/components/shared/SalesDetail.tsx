@@ -52,79 +52,88 @@ export function SalesDetail({ index, onBack }: SalesDetailProps) {
   }
 
   return (
-    <Card className="w-full">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div className="flex items-center">
-          <Button size="icon" onClick={onBack}>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <CardTitle className="ml-2">Sale Details</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-6">
-          <div>
-            <h3 className="text-sm font-medium text-gray-500">Invoice Code</h3>
-            <p className="text-lg font-medium">{sale.invoiceCode}</p>
+    <>
+      <div className="mb-6 flex justify-between items-center">
+        <h2 className="text-2xl font-bold">Sale Details</h2>
+      </div>
+      <Card className="w-full">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div className="flex items-center">
+            <Button size="icon" onClick={onBack}>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <CardTitle className="ml-2">Sale Details</CardTitle>
           </div>
-          <div>
-            <h3 className="text-sm font-medium text-gray-500">Invoice Date</h3>
-            <p className="text-lg font-medium">
-              {format(new Date(sale.invoiceDate), 'dd MMMM yyyy', {
-                locale: id,
-              })}
-            </p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-6">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500">
+                Invoice Code
+              </h3>
+              <p className="text-lg font-medium">{sale.invoiceCode}</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-gray-500">
+                Invoice Date
+              </h3>
+              <p className="text-lg font-medium">
+                {format(new Date(sale.invoiceDate), 'dd MMMM yyyy', {
+                  locale: id,
+                })}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="mb-6">
-          <h3 className="text-lg font-medium mb-2">Items</h3>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Product Name</TableHead>
-                <TableHead className="text-right">Qty</TableHead>
-                <TableHead className="text-right">Price</TableHead>
-                <TableHead className="text-right">Total</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sale.items.map((item, idx) => (
-                <TableRow key={idx}>
-                  <TableCell>{item.productName}</TableCell>
-                  <TableCell className="text-right">{item.qty}</TableCell>
-                  <TableCell className="text-right">
-                    Rp {item.price.toLocaleString('id-ID')}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    RP {(item.qty * item.price).toLocaleString('id-ID')}
-                  </TableCell>
+          <div className="mb-6">
+            <h3 className="text-lg font-medium mb-2">Items</h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Product Name</TableHead>
+                  <TableHead className="text-right">Qty</TableHead>
+                  <TableHead className="text-right">Price</TableHead>
+                  <TableHead className="text-right">Total</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </TableHeader>
+              <TableBody>
+                {sale.items.map((item, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell>{item.productName}</TableCell>
+                    <TableCell className="text-right">{item.qty}</TableCell>
+                    <TableCell className="text-right">
+                      Rp {item.price.toLocaleString('id-ID')}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      RP {(item.qty * item.price).toLocaleString('id-ID')}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
 
-        <div className="space-y-2">
-          <div className="flex justify-between">
-            <span>Subtotal</span>
-            <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Discount</span>
+              <span>Rp {sale.discount.toLocaleString('id-ID')}</span>
+            </div>
+            <div className="flex justify-between font-bold">
+              <span>Grand Total</span>
+              <span>Rp {calculateGrandTotal().toLocaleString('id-ID')}</span>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <span>Discount</span>
-            <span>Rp {sale.discount.toLocaleString('id-ID')}</span>
-          </div>
-          <div className="flex justify-between font-bold">
-            <span>Grand Total</span>
-            <span>Rp {calculateGrandTotal().toLocaleString('id-ID')}</span>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button variant="outline" onClick={onBack}>
-          Back to List
-        </Button>
-      </CardFooter>
-    </Card>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button variant="outline" onClick={onBack}>
+            Back to List
+          </Button>
+        </CardFooter>
+      </Card>
+    </>
   )
 }

@@ -6,23 +6,23 @@ A simple yet functional sales management application built with **React**, **Typ
 
 ## 📦 Features
 
-- ✅ Add new sales with invoice details and itemized products  
-- ✅ Edit and delete existing sales  
-- ✅ View detailed information of each sale  
-- ✅ Real-time form validation using `Zod` and `React Hook Form`  
-- ✅ Persistent local storage with `Zustand + persist` middleware  
+- ✅ Add new sales with invoice details and itemized products
+- ✅ Edit and delete existing sales
+- ✅ View detailed information of each sale
+- ✅ Real-time form validation using `Zod` and `React Hook Form`
+- ✅ Persistent local storage with `Zustand + persist` middleware
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **React**   
-- **TypeScript**  
-- **Tailwind CSS** with **ShadCN UI**  
-- **Zustand** (state management)  
-- **Zod** (schema validation)  
-- **React Hook Form** (form handling)  
-- **Vite** (build tool)  
+- **React**
+- **TypeScript**
+- **Tailwind CSS** with **ShadCN UI**
+- **Zustand** (state management)
+- **Zod** (schema validation)
+- **React Hook Form** (form handling)
+- **Vite** (build tool)
 
 ---
 

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
 import { SalesList } from '@/components/shared/SalesList'
 import { SalesForm } from '@/components/shared/SalesForm'
 import { SalesDetail } from '@/components/shared/SalesDetail'
@@ -42,40 +41,20 @@ export default function Home() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-6 flex justify-between items-center">
-          {view === 'list' && (
-            <>
-              <h2 className="text-2xl font-bold">Sales Data</h2>
-              <Button onClick={handleNew}>Add New Sale</Button>
-            </>
-          )}
-          {view === 'new' && (
-            <>
-              <h2 className="text-2xl font-bold">New Sale</h2>
-              <Button variant="outline" onClick={handleBack}>
-                Back to List
-              </Button>
-            </>
-          )}
-          {view === 'edit' && (
-            <>
-              <h2 className="text-2xl font-bold">Edit Sale</h2>
-              <Button variant="outline" onClick={handleBack}>
-                Back to List
-              </Button>
-            </>
-          )}
-          {view === 'detail' && (
-            <h2 className="text-2xl font-bold">Sale Details</h2>
-          )}
-        </div>
-
         {view === 'list' && (
-          <SalesList onEdit={handleEdit} onView={handleView} />
+          <SalesList
+            onEdit={handleEdit}
+            onView={handleView}
+            onHandleAddNew={handleNew}
+          />
         )}
-        {view === 'new' && <SalesForm onSubmitSuccess={handleBack} />}
+        {view === 'new' && <SalesForm handleBack={handleBack} type="new" />}
         {view === 'edit' && (
-          <SalesForm editIndex={selectedIndex} onSubmitSuccess={handleBack} />
+          <SalesForm
+            editIndex={selectedIndex}
+            handleBack={handleBack}
+            type="edit"
+          />
         )}
         {view === 'detail' && selectedIndex !== undefined && (
           <SalesDetail index={selectedIndex} onBack={handleBack} />

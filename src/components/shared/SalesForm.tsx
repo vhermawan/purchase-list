@@ -22,10 +22,11 @@ import { DatePicker } from '@/components/ui/datepicker'
 
 interface SalesFormProps {
   editIndex?: number
-  onSubmitSuccess?: () => void
+  handleBack?: () => void
+  type: 'new' | 'edit'
 }
 
-export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
+export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
   const { addSale, updateSale, getSale } = useSalesStore()
   const editSale = editIndex !== undefined ? getSale(editIndex) : undefined
 
@@ -67,8 +68,8 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
       toast({ title: 'Sale added successfully' })
     }
 
-    if (onSubmitSuccess) {
-      onSubmitSuccess()
+    if (handleBack) {
+      handleBack()
     }
   }
 
@@ -82,219 +83,237 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
   const minDate = new Date('2020-01-01')
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>
-          {editIndex !== undefined ? 'Edit Sale' : 'New Sale'}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="invoiceCode"
-                render={({ field, formState }) => (
-                  <FormItem>
-                    <FormLabel>Invoice Code</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="INV-001"
-                        className={cn({
-                          'border border-red-500': formState.errors.invoiceCode,
-                        })}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {formState.errors.invoiceCode?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
+    <div>
+      <div className="mb-6 flex justify-between items-center">
+        <h2 className="text-2xl font-bold">
+          {type === 'edit' ? 'Edit Sale' : 'New Sale'}
+        </h2>
+        <Button variant="outline" onClick={handleBack}>
+          Back to List
+        </Button>
+      </div>
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>
+            {editIndex !== undefined ? 'Edit Sale' : 'New Sale'}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="invoiceCode"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormLabel>Invoice Code</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="INV-001"
+                          className={cn({
+                            'border border-red-500':
+                              formState.errors.invoiceCode,
+                          })}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage>
+                        {formState.errors.invoiceCode?.message}
+                      </FormMessage>
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="invoiceDate"
-                render={({ field, formState }) => (
-                  <FormItem>
-                    <FormLabel>Invoice Date</FormLabel>
-                    <FormControl>
-                      <DatePicker
-                        onChange={(e) => {
-                          field.onChange(e)
-                        }}
-                        date={field.value}
-                        id="invoiceDate"
-                        name="invoiceDate"
-                        minDate={minDate}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {formState.errors.invoiceDate?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium">Items</h3>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => append({ productName: '', qty: 1, price: 0 })}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add Item
-                </Button>
+                <FormField
+                  control={form.control}
+                  name="invoiceDate"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormLabel>Invoice Date</FormLabel>
+                      <FormControl>
+                        <DatePicker
+                          onChange={(e) => {
+                            field.onChange(e)
+                          }}
+                          date={field.value}
+                          id="invoiceDate"
+                          name="invoiceDate"
+                          minDate={minDate}
+                        />
+                      </FormControl>
+                      <FormMessage>
+                        {formState.errors.invoiceDate?.message}
+                      </FormMessage>
+                    </FormItem>
+                  )}
+                />
               </div>
 
-              {fields.map((field, index) => (
-                <div key={field.id} className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                    <FormField
-                      control={form.control}
-                      name={`items.${index}.productName`}
-                      render={({ field, formState }) => (
-                        <FormItem>
-                          <FormLabel>Product Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Product name"
-                              className={cn({
-                                'border border-red-500':
-                                  formState.errors.items?.[index]?.productName,
-                              })}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage>
-                            {
-                              formState.errors.items?.[index]?.productName
-                                ?.message
-                            }
-                          </FormMessage>
-                        </FormItem>
-                      )}
-                    />
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium">Items</h3>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      append({ productName: '', qty: 1, price: 0 })
+                    }
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Item
+                  </Button>
+                </div>
 
-                    <FormField
-                      control={form.control}
-                      name={`items.${index}.qty`}
-                      render={({ field, formState }) => (
-                        <FormItem>
-                          <FormLabel>Quantity</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="text"
-                              placeholder="Quantity"
-                              {...field}
-                              onChange={(e) =>
-                                field.onChange(maskingNumber(e.target.value))
+                {fields.map((field, index) => (
+                  <div key={field.id} className="space-y-4">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                      <FormField
+                        control={form.control}
+                        name={`items.${index}.productName`}
+                        render={({ field, formState }) => (
+                          <FormItem>
+                            <FormLabel>Product Name</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Product name"
+                                className={cn({
+                                  'border border-red-500':
+                                    formState.errors.items?.[index]
+                                      ?.productName,
+                                })}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage>
+                              {
+                                formState.errors.items?.[index]?.productName
+                                  ?.message
                               }
-                              className={cn({
-                                'border border-red-500':
-                                  formState.errors.items?.[index]?.qty,
-                              })}
-                            />
-                          </FormControl>
-                          <FormMessage>
-                            {formState.errors.items?.[index]?.qty?.message}
-                          </FormMessage>
-                        </FormItem>
-                      )}
-                    />
+                            </FormMessage>
+                          </FormItem>
+                        )}
+                      />
 
-                    <FormField
-                      control={form.control}
-                      name={`items.${index}.price`}
-                      render={({ field, formState }) => (
-                        <FormItem>
-                          <FormLabel>Price</FormLabel>
-                          <div className="flex items-center gap-2">
+                      <FormField
+                        control={form.control}
+                        name={`items.${index}.qty`}
+                        render={({ field, formState }) => (
+                          <FormItem>
+                            <FormLabel>Quantity</FormLabel>
                             <FormControl>
                               <Input
                                 type="text"
-                                placeholder="Price"
+                                placeholder="Quantity"
                                 {...field}
-                                value={formatRupiah(field.value)}
-                                className={cn({
-                                  'border border-red-500':
-                                    formState.errors.items?.[index]?.price,
-                                })}
                                 onChange={(e) =>
                                   field.onChange(maskingNumber(e.target.value))
                                 }
+                                className={cn({
+                                  'border border-red-500':
+                                    formState.errors.items?.[index]?.qty,
+                                })}
                               />
                             </FormControl>
-                            {fields.length > 1 && (
-                              <Button
-                                type="button"
-                                variant="destructive"
-                                size="icon"
-                                onClick={() => remove(index)}
-                              >
-                                <Trash className="h-4 w-4" />
-                              </Button>
-                            )}
-                          </div>
-                          <FormMessage>
-                            {formState.errors.items?.[index]?.price?.message}
-                          </FormMessage>
-                        </FormItem>
-                      )}
-                    />
+                            <FormMessage>
+                              {formState.errors.items?.[index]?.qty?.message}
+                            </FormMessage>
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name={`items.${index}.price`}
+                        render={({ field, formState }) => (
+                          <FormItem>
+                            <FormLabel>Price</FormLabel>
+                            <div className="flex items-center gap-2">
+                              <FormControl>
+                                <Input
+                                  type="text"
+                                  placeholder="Price"
+                                  {...field}
+                                  value={formatRupiah(field.value)}
+                                  className={cn({
+                                    'border border-red-500':
+                                      formState.errors.items?.[index]?.price,
+                                  })}
+                                  onChange={(e) =>
+                                    field.onChange(
+                                      maskingNumber(e.target.value),
+                                    )
+                                  }
+                                />
+                              </FormControl>
+                              {fields.length > 1 && (
+                                <Button
+                                  type="button"
+                                  variant="destructive"
+                                  size="icon"
+                                  onClick={() => remove(index)}
+                                >
+                                  <Trash className="h-4 w-4" />
+                                </Button>
+                              )}
+                            </div>
+                            <FormMessage>
+                              {formState.errors.items?.[index]?.price?.message}
+                            </FormMessage>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    {index < fields.length - 1 && (
+                      <Separator className="my-2" />
+                    )}
                   </div>
-                  {index < fields.length - 1 && <Separator className="my-2" />}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <FormField
-              control={form.control}
-              name="discount"
-              render={({ field, formState }) => (
-                <FormItem>
-                  <FormLabel>Discount</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Discount"
-                      {...field}
-                      value={formatRupiah(field.value)}
-                      onChange={(e) => {
-                        const rawValue = e.target.value.replace(/[^0-9]/g, '')
-                        const numeric = Number(rawValue)
-                        field.onChange(numeric)
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage>
-                    {formState.errors.discount?.message}
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="discount"
+                render={({ field, formState }) => (
+                  <FormItem>
+                    <FormLabel>Discount</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Discount"
+                        {...field}
+                        value={formatRupiah(field.value)}
+                        onChange={(e) => {
+                          const rawValue = e.target.value.replace(/[^0-9]/g, '')
+                          const numeric = Number(rawValue)
+                          field.onChange(numeric)
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {formState.errors.discount?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
 
-            <div className="flex justify-between items-center p-4 bg-gray-50 rounded-md">
-              <span className="font-medium">Grand Total:</span>
-              <span className="text-lg font-bold">
-                Rp {grandTotal.toLocaleString('id-ID')}
-              </span>
-            </div>
+              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-md">
+                <span className="font-medium">Grand Total:</span>
+                <span className="text-lg font-bold">
+                  Rp {grandTotal.toLocaleString('id-ID')}
+                </span>
+              </div>
 
-            <div className="flex justify-end gap-2">
-              <Button type="submit">
-                {editIndex !== undefined ? 'Update Sale' : 'Add Sale'}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+              <div className="flex justify-end gap-2">
+                <Button type="submit">
+                  {editIndex !== undefined ? 'Update Sale' : 'Add Sale'}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

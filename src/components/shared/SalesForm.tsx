@@ -18,6 +18,7 @@ import { Plus, Trash } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { useMemo } from 'react'
 import { maskingNumber } from '@/lib/utils'
+import { DatePicker } from '@/components/ui/datepicker'
 
 interface SalesFormProps {
   editIndex?: number
@@ -30,7 +31,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
 
   const defaultValues: Partial<SalesData> = editSale || {
     invoiceCode: '',
-    invoiceDate: Date.now(),
+    invoiceDate: new Date(),
     items: [{ productName: '', qty: 1, price: 0 }],
     discount: 0,
   }
@@ -78,6 +79,8 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
     return 'Rp ' + number.toLocaleString('id-ID')
   }
 
+  const minDate = new Date('2020-01-01')
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -112,7 +115,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                   <FormItem>
                     <FormLabel>Invoice Date</FormLabel>
                     <FormControl>
-                      <Input
+                      {/* <Input
                         type="date"
                         {...field}
                         value={
@@ -122,6 +125,15 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                           const date = new Date(e.target.value)
                           field.onChange(date.getTime())
                         }}
+                      /> */}
+                      <DatePicker
+                        onChange={(e) => {
+                          field.onChange(e)
+                        }}
+                        date={field.value}
+                        id="invoiceDate"
+                        name="invoiceDate"
+                        minDate={minDate}
                       />
                     </FormControl>
                     <FormMessage>

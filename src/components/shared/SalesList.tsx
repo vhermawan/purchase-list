@@ -54,7 +54,7 @@ export function SalesList({ onEdit, onView }: SalesListProps) {
                 <TableRow key={index}>
                   <TableCell>{sale.invoiceCode}</TableCell>
                   <TableCell>
-                    {new Date(sale.invoiceDate).toLocaleDateString()}
+                    {/* {new Date(sale.invoiceDate).toLocaleDateString()} */}
                   </TableCell>
                   <TableCell>{sale.items.length} items</TableCell>
                   <TableCell className="text-right">

@@ -18,7 +18,7 @@ export const salesSchema = z.object({
     .min(1, 'Invoice code must be filled')
     .max(32, 'Invoice code must be 32 characters or less'),
   invoiceDate: z
-    .number()
+    .date()
     .refine(
       (date) => new Date(date).getFullYear() >= 2020,
       'Invoice date must be after 2020',

@@ -17,7 +17,7 @@ import { Separator } from '@/components/ui/separator'
 import { Plus, Trash } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { useMemo } from 'react'
-import { maskingNumber } from '@/lib/utils'
+import { cn, maskingNumber } from '@/lib/utils'
 import { DatePicker } from '@/components/ui/datepicker'
 
 interface SalesFormProps {
@@ -99,7 +99,13 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                   <FormItem>
                     <FormLabel>Invoice Code</FormLabel>
                     <FormControl>
-                      <Input placeholder="INV-001" {...field} />
+                      <Input
+                        placeholder="INV-001"
+                        className={cn({
+                          'border border-red-500': formState.errors.invoiceCode,
+                        })}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage>
                       {formState.errors.invoiceCode?.message}
@@ -115,17 +121,6 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                   <FormItem>
                     <FormLabel>Invoice Date</FormLabel>
                     <FormControl>
-                      {/* <Input
-                        type="date"
-                        {...field}
-                        value={
-                          new Date(field.value).toISOString().split('T')[0]
-                        }
-                        onChange={(e) => {
-                          const date = new Date(e.target.value)
-                          field.onChange(date.getTime())
-                        }}
-                      /> */}
                       <DatePicker
                         onChange={(e) => {
                           field.onChange(e)
@@ -168,7 +163,14 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                         <FormItem>
                           <FormLabel>Product Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Product name" {...field} />
+                            <Input
+                              placeholder="Product name"
+                              className={cn({
+                                'border border-red-500':
+                                  formState.errors.items?.[index]?.productName,
+                              })}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage>
                             {
@@ -194,6 +196,10 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                               onChange={(e) =>
                                 field.onChange(maskingNumber(e.target.value))
                               }
+                              className={cn({
+                                'border border-red-500':
+                                  formState.errors.items?.[index]?.qty,
+                              })}
                             />
                           </FormControl>
                           <FormMessage>
@@ -216,6 +222,10 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                                 placeholder="Price"
                                 {...field}
                                 value={formatRupiah(field.value)}
+                                className={cn({
+                                  'border border-red-500':
+                                    formState.errors.items?.[index]?.price,
+                                })}
                                 onChange={(e) =>
                                   field.onChange(maskingNumber(e.target.value))
                                 }

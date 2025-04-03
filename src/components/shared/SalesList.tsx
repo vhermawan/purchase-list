@@ -10,6 +10,8 @@ import {
 } from '../ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Eye, Pencil, Trash } from 'lucide-react'
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 interface SalesListProps {
   onEdit: (index: number) => void
@@ -54,11 +56,13 @@ export function SalesList({ onEdit, onView }: SalesListProps) {
                 <TableRow key={index}>
                   <TableCell>{sale.invoiceCode}</TableCell>
                   <TableCell>
-                    {/* {new Date(sale.invoiceDate).toLocaleDateString()} */}
+                    {format(new Date(sale.invoiceDate), 'dd MMMM yyyy', {
+                      locale: id,
+                    })}
                   </TableCell>
                   <TableCell>{sale.items.length} items</TableCell>
                   <TableCell className="text-right">
-                    {calculateGrandTotal(index).toLocaleString()}
+                    Rp {calculateGrandTotal(index).toLocaleString('id-ID')}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">

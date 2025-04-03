@@ -1,5 +1,5 @@
 import { useSalesStore } from '@/lib/store'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -7,14 +7,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../ui/table'
+} from '@/components/ui/table'
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../ui/card'
+} from '@/components/ui/card'
 import { ChevronLeft } from 'lucide-react'
 
 interface SalesDetailProps {
@@ -53,7 +53,7 @@ export function SalesDetail({ index, onBack }: SalesDetailProps) {
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between">
         <div className="flex items-center">
-          <Button variant="ghost" size="icon" onClick={onBack}>
+          <Button size="icon" onClick={onBack}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <CardTitle className="ml-2">Sale Details</CardTitle>

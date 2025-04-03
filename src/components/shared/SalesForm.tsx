@@ -2,8 +2,8 @@ import { useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { salesSchema, SalesData } from '@/lib/schema'
 import { useSalesStore } from '@/lib/store'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -11,9 +11,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
-import { Separator } from '../ui/separator'
+} from '@/components/ui/form'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { Plus, Trash } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { useMemo } from 'react'
@@ -36,7 +36,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
   }
 
   const form = useForm<SalesData>({
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onChange',
     resolver: zodResolver(salesSchema),
     defaultValues,
   })
@@ -92,13 +92,15 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
               <FormField
                 control={form.control}
                 name="invoiceCode"
-                render={({ field }) => (
+                render={({ field, formState }) => (
                   <FormItem>
                     <FormLabel>Invoice Code</FormLabel>
                     <FormControl>
                       <Input placeholder="INV-001" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage>
+                      {formState.errors.invoiceCode?.message}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -106,7 +108,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
               <FormField
                 control={form.control}
                 name="invoiceDate"
-                render={({ field }) => (
+                render={({ field, formState }) => (
                   <FormItem>
                     <FormLabel>Invoice Date</FormLabel>
                     <FormControl>
@@ -122,7 +124,9 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                         }}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage>
+                      {formState.errors.invoiceDate?.message}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -148,13 +152,18 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                     <FormField
                       control={form.control}
                       name={`items.${index}.productName`}
-                      render={({ field }) => (
+                      render={({ field, formState }) => (
                         <FormItem>
                           <FormLabel>Product Name</FormLabel>
                           <FormControl>
                             <Input placeholder="Product name" {...field} />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage>
+                            {
+                              formState.errors.items?.[index]?.productName
+                                ?.message
+                            }
+                          </FormMessage>
                         </FormItem>
                       )}
                     />
@@ -162,7 +171,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                     <FormField
                       control={form.control}
                       name={`items.${index}.qty`}
-                      render={({ field }) => (
+                      render={({ field, formState }) => (
                         <FormItem>
                           <FormLabel>Quantity</FormLabel>
                           <FormControl>
@@ -175,7 +184,9 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                               }
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage>
+                            {formState.errors.items?.[index]?.qty?.message}
+                          </FormMessage>
                         </FormItem>
                       )}
                     />
@@ -183,7 +194,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                     <FormField
                       control={form.control}
                       name={`items.${index}.price`}
-                      render={({ field }) => (
+                      render={({ field, formState }) => (
                         <FormItem>
                           <FormLabel>Price</FormLabel>
                           <div className="flex items-center gap-2">
@@ -209,7 +220,9 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                               </Button>
                             )}
                           </div>
-                          <FormMessage />
+                          <FormMessage>
+                            {formState.errors.items?.[index]?.price?.message}
+                          </FormMessage>
                         </FormItem>
                       )}
                     />
@@ -222,7 +235,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
             <FormField
               control={form.control}
               name="discount"
-              render={({ field }) => (
+              render={({ field, formState }) => (
                 <FormItem>
                   <FormLabel>Discount</FormLabel>
                   <FormControl>
@@ -238,7 +251,9 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                       }}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {formState.errors.discount?.message}
+                  </FormMessage>
                 </FormItem>
               )}
             />

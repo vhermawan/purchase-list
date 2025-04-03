@@ -8,7 +8,7 @@ export const itemSchema = z.object({
   qty: z.number().positive().max(1000, 'Quantity must be between 1 and 1000'),
   price: z
     .number()
-    .positive()
+    .min(1, 'Price must be filled')
     .max(1000000, 'Price must be between 1 and 1,000,000'),
 })
 

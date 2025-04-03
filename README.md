@@ -31,8 +31,8 @@ A simple yet functional sales management application built with **React**, **Typ
 ### Prerequisites
 
 - Node.js (v21 or higher)
-- npm or yarn or bun
-- In this project is use bun
+- npm or yarn or pnpm
+- In this project is use pnpm
 
 ### Local Development
 
@@ -50,7 +50,7 @@ A simple yet functional sales management application built with **React**, **Typ
    # or
    yarn
    # or
-   bun install
+   pnpm install
    ```
 
 3. Start the development server:
@@ -60,7 +60,7 @@ A simple yet functional sales management application built with **React**, **Typ
    # or
    yarn dev
    # or
-   bun dev
+   pnpm dev
    ```
 
 4. Open your browser and navigate to `http://localhost:5173`

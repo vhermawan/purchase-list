@@ -1,7 +1,10 @@
 import { z } from 'zod'
 
 export const itemSchema = z.object({
-  productName: z.string().max(32, 'Product name must be 32 characters or less'),
+  productName: z
+    .string()
+    .min(1, 'Product name must be filled')
+    .max(32, 'Product name must be 32 characters or less'),
   qty: z.number().positive().max(1000, 'Quantity must be between 1 and 1000'),
   price: z
     .number()
@@ -10,7 +13,10 @@ export const itemSchema = z.object({
 })
 
 export const salesSchema = z.object({
-  invoiceCode: z.string().max(32, 'Invoice code must be 32 characters or less'),
+  invoiceCode: z
+    .string()
+    .min(1, 'Invoice code must be filled')
+    .max(32, 'Invoice code must be 32 characters or less'),
   invoiceDate: z
     .number()
     .refine(

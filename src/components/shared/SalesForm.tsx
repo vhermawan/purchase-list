@@ -16,6 +16,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Separator } from '../ui/separator'
 import { Plus, Trash } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
+import { useMemo } from 'react'
+import { maskingNumber } from '@/lib/utils'
 
 interface SalesFormProps {
   editIndex?: number
@@ -34,6 +36,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
   }
 
   const form = useForm<SalesData>({
+    reValidateMode: 'onSubmit',
     resolver: zodResolver(salesSchema),
     defaultValues,
   })
@@ -43,7 +46,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
     name: 'items',
   })
 
-  const calculateGrandTotal = () => {
+  const grandTotal = useMemo(() => {
     const items = form.watch('items')
     const discount = form.watch('discount') || 0
 
@@ -52,7 +55,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
     }, 0)
 
     return subtotal - discount
-  }
+  }, [form])
 
   const onSubmit = (data: SalesData) => {
     if (editIndex !== undefined) {
@@ -66,6 +69,13 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
     if (onSubmitSuccess) {
       onSubmitSuccess()
     }
+  }
+
+  function formatRupiah(value: number | string): string {
+    const number = typeof value === 'string' ? parseInt(value) : value
+    if (isNaN(number)) return 'Rp 0'
+
+    return 'Rp ' + number.toLocaleString('id-ID')
   }
 
   return (
@@ -157,11 +167,11 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                           <FormLabel>Quantity</FormLabel>
                           <FormControl>
                             <Input
-                              type="number"
+                              type="text"
                               placeholder="Quantity"
                               {...field}
                               onChange={(e) =>
-                                field.onChange(Number(e.target.value))
+                                field.onChange(maskingNumber(e.target.value))
                               }
                             />
                           </FormControl>
@@ -179,11 +189,12 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                           <div className="flex items-center gap-2">
                             <FormControl>
                               <Input
-                                type="number"
+                                type="text"
                                 placeholder="Price"
                                 {...field}
+                                value={formatRupiah(field.value)}
                                 onChange={(e) =>
-                                  field.onChange(Number(e.target.value))
+                                  field.onChange(maskingNumber(e.target.value))
                                 }
                               />
                             </FormControl>
@@ -216,10 +227,15 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
                   <FormLabel>Discount</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
+                      type="text"
                       placeholder="Discount"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      value={formatRupiah(field.value)}
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/[^0-9]/g, '')
+                        const numeric = Number(rawValue)
+                        field.onChange(numeric)
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -230,7 +246,7 @@ export function SalesForm({ editIndex, onSubmitSuccess }: SalesFormProps) {
             <div className="flex justify-between items-center p-4 bg-gray-50 rounded-md">
               <span className="font-medium">Grand Total:</span>
               <span className="text-lg font-bold">
-                {calculateGrandTotal().toLocaleString()}
+                Rp {grandTotal.toLocaleString('id-ID')}
               </span>
             </div>
 

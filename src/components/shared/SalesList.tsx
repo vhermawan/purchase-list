@@ -12,6 +12,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Eye, Pencil, Trash } from 'lucide-react'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
+import { ConfirmationDialog } from './ConfirmationDialog'
+import { useState } from 'react'
 
 interface SalesListProps {
   onEdit: (index: number) => void
@@ -20,6 +22,10 @@ interface SalesListProps {
 
 export function SalesList({ onEdit, onView }: SalesListProps) {
   const { sales, deleteSale } = useSalesStore()
+  const [confirmationDialog, setConfirmationDialog] = useState({
+    index: -1,
+    isOpen: false,
+  })
 
   const calculateGrandTotal = (index: number) => {
     const sale = sales[index]
@@ -83,7 +89,9 @@ export function SalesList({ onEdit, onView }: SalesListProps) {
                       <Button
                         variant="destructive"
                         size="icon"
-                        onClick={() => deleteSale(index)}
+                        onClick={() =>
+                          setConfirmationDialog({ index, isOpen: true })
+                        }
                       >
                         <Trash className="h-4 w-4" />
                       </Button>
@@ -94,6 +102,16 @@ export function SalesList({ onEdit, onView }: SalesListProps) {
             </TableBody>
           </Table>
         )}
+        <ConfirmationDialog
+          isOpen={confirmationDialog.isOpen}
+          onConfirm={() => {
+            setConfirmationDialog({ index: -1, isOpen: false })
+            deleteSale(confirmationDialog.index)
+          }}
+          onCancel={() => setConfirmationDialog({ index: -1, isOpen: false })}
+          title="Delete Sale"
+          description="Are you sure you want to delete this sale?"
+        />
       </CardContent>
     </Card>
   )

@@ -16,6 +16,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { ChevronLeft } from 'lucide-react'
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 interface SalesDetailProps {
   index: number
@@ -68,7 +70,9 @@ export function SalesDetail({ index, onBack }: SalesDetailProps) {
           <div>
             <h3 className="text-sm font-medium text-gray-500">Invoice Date</h3>
             <p className="text-lg font-medium">
-              {new Date(sale.invoiceDate).toLocaleDateString()}
+              {format(new Date(sale.invoiceDate), 'dd MMMM yyyy', {
+                locale: id,
+              })}
             </p>
           </div>
         </div>
@@ -90,10 +94,10 @@ export function SalesDetail({ index, onBack }: SalesDetailProps) {
                   <TableCell>{item.productName}</TableCell>
                   <TableCell className="text-right">{item.qty}</TableCell>
                   <TableCell className="text-right">
-                    {item.price.toLocaleString()}
+                    Rp {item.price.toLocaleString('id-ID')}
                   </TableCell>
                   <TableCell className="text-right">
-                    {(item.qty * item.price).toLocaleString()}
+                    RP {(item.qty * item.price).toLocaleString('id-ID')}
                   </TableCell>
                 </TableRow>
               ))}
@@ -104,15 +108,15 @@ export function SalesDetail({ index, onBack }: SalesDetailProps) {
         <div className="space-y-2">
           <div className="flex justify-between">
             <span>Subtotal</span>
-            <span>{calculateSubtotal().toLocaleString()}</span>
+            <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
           </div>
           <div className="flex justify-between">
             <span>Discount</span>
-            <span>{sale.discount.toLocaleString()}</span>
+            <span>Rp {sale.discount.toLocaleString('id-ID')}</span>
           </div>
           <div className="flex justify-between font-bold">
             <span>Grand Total</span>
-            <span>{calculateGrandTotal().toLocaleString()}</span>
+            <span>Rp {calculateGrandTotal().toLocaleString('id-ID')}</span>
           </div>
         </div>
       </CardContent>

@@ -29,14 +29,19 @@ export function ConfirmationDialog({
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold">{title}</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-sm text-muted-foreground">
+        <DialogDescription
+          className="text-sm text-muted-foreground"
+          data-testid="description-confirmation"
+        >
           {description}
         </DialogDescription>
         <DialogFooter className="flex items-center justify-end space-x-2">
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
-          <Button onClick={onConfirm}>Confirm</Button>
+          <Button data-testid="btn-confirmation" onClick={onConfirm}>
+            Confirm
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { format } from 'date-fns'
 import { id as idLocale } from 'date-fns/locale'
 import { Calendar as CalendarIcon } from 'lucide-react'
@@ -20,6 +21,8 @@ type DatePickerProps = {
   name: string
   disabled?: boolean
   minDate?: Date
+  dataTestIdCalendar?: string
+  dataTestIdPicker?: string
 }
 
 export function DatePicker({
@@ -29,16 +32,26 @@ export function DatePicker({
   name,
   disabled,
   minDate,
+  dataTestIdCalendar,
+  dataTestIdPicker,
 }: DatePickerProps) {
+  const [open, setOpen] = useState(false)
+
+  function handleSelect(newDate: Date | undefined) {
+    onChange(newDate)
+    setOpen(false) // 🔒 Close the popover when date is selected
+  }
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild name={name} id={id} disabled={disabled}>
         <Button
-          variant={'outline'}
+          variant="outline"
           className={cn(
             'w-full p-2 justify-start text-left font-normal',
             !date && 'text-muted-foreground',
           )}
+          data-testid={dataTestIdPicker}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? (
@@ -52,10 +65,11 @@ export function DatePicker({
         <Calendar
           mode="single"
           selected={date}
-          onSelect={onChange}
+          onSelect={handleSelect}
           initialFocus
           className="bg-white"
           minDate={minDate}
+          data-testid={dataTestIdCalendar}
         />
       </PopoverContent>
     </Popover>

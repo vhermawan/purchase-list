@@ -120,11 +120,15 @@ export function SalesDetail({ index, onBack }: SalesDetailProps) {
             </div>
             <div className="flex justify-between">
               <span>Discount</span>
-              <span>Rp {sale.discount.toLocaleString('id-ID')}</span>
+              <span data-testid="discount-total">
+                Rp {sale.discount.toLocaleString('id-ID')}
+              </span>
             </div>
             <div className="flex justify-between font-bold">
               <span>Grand Total</span>
-              <span>Rp {calculateGrandTotal().toLocaleString('id-ID')}</span>
+              <span data-testid="grand-total">
+                Rp {calculateGrandTotal().toLocaleString('id-ID')}
+              </span>
             </div>
           </div>
         </CardContent>

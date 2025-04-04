@@ -140,6 +140,8 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                           id="invoiceDate"
                           name="invoiceDate"
                           minDate={minDate}
+                          dataTestIdPicker="date-picker-btn"
+                          dataTestIdCalendar="Invoice Date"
                         />
                       </FormControl>
                       <FormMessage>

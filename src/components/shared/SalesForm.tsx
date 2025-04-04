@@ -30,7 +30,16 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
   const { addSale, updateSale, getSale } = useSalesStore()
   const editSale = editIndex !== undefined ? getSale(editIndex) : undefined
 
-  const defaultValues: Partial<SalesData> = editSale || {
+  const initialSale = useMemo(() => {
+    if (!editSale) return null
+
+    return {
+      ...editSale,
+      invoiceDate: new Date(editSale.invoiceDate),
+    }
+  }, [editSale])
+
+  const defaultValues: Partial<SalesData> = initialSale || {
     invoiceCode: '',
     invoiceDate: new Date(),
     items: [{ productName: '', qty: 1, price: 0 }],
@@ -48,16 +57,17 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
     name: 'items',
   })
 
-  const grandTotal = useMemo(() => {
+  // console.log(items)
+
+  const grandTotal = () => {
     const items = form.watch('items')
     const discount = form.watch('discount') || 0
-
     const subtotal = items.reduce((sum, item) => {
       return sum + (Number(item.qty) || 0) * (Number(item.price) || 0)
     }, 0)
 
     return subtotal - discount
-  }, [form])
+  }
 
   const onSubmit = (data: SalesData) => {
     if (editIndex !== undefined) {
@@ -239,7 +249,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                                   }
                                 />
                               </FormControl>
-                              {fields.length > 1 && (
+                              {fields.length > 1 && index > 0 && (
                                 <Button
                                   type="button"
                                   variant="destructive"
@@ -292,7 +302,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
               <div className="flex justify-between items-center p-4 bg-gray-50 rounded-md">
                 <span className="font-medium">Grand Total:</span>
                 <span className="text-lg font-bold">
-                  Rp {grandTotal.toLocaleString('id-ID')}
+                  Rp {grandTotal().toLocaleString('id-ID')}
                 </span>
               </div>
 

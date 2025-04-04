@@ -16,13 +16,14 @@ A simple yet functional sales management application built with **React**, **Typ
 
 ## 🛠️ Tech Stack
 
-- **React**
-- **TypeScript**
-- **Tailwind CSS** with **ShadCN UI**
-- **Zustand** (state management)
-- **Zod** (schema validation)
-- **React Hook Form** (form handling)
-- **Vite** (build tool)
+- **Framework**: React 18 with TypeScript
+- **State Management**: Zustand with persist middleware
+- **Form Handling**: React Hook Form with Zod validation
+- **UI Components**: shadcn/ui component library
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+- **Testing**: Playwright for E2E testing
 
 ---
 
@@ -38,32 +39,104 @@ A simple yet functional sales management application built with **React**, **Typ
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/vhermawan/purchase-list
-   cd github-repositories-explorer
-   ```
+```bash
+git clone https://github.com/vhermawan/purchase-list
+cd purchase-list
+```
 
 2. Install dependencies:
 
-   ```bash
-   npm install
-   # or
-   yarn
-   # or
-   pnpm install
-   ```
+```bash
+npm install
+# or
+yarn
+# or
+pnpm i
+```
 
 3. Start the development server:
 
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   ```
+```bash
+npm run dev
+# or
+yarn dev
+#
+or pnpm dev
+```
 
 4. Open your browser and navigate to `http://localhost:5173`
+
+## Project Structure
+
+```
+sales-management-app/
+├── src/
+│   ├── components/          # UI components
+│   │   ├── ui/              # shadcn/ui components
+|   |   ├── shared/          # for shared component
+│   │   |   ├── sales-form.tsx   # Form for creating/editing sales
+│   │   |   ├── sales-list.tsx   # Table listing all sales
+│   │   |   └── sales-detail.tsx # Detailed view of a sale
+│   ├── lib/                 # Utilities and state management
+│   │   ├── schema.ts        # Zod validation schemas
+│   │   └── store.ts         # Zustand store with persistence
+│   ├── App.tsx              # Main application component
+│   └── main.tsx             # Application entry point
+├── tests/                   # Playwright E2E tests
+│   ├── sales-workflow.spec.ts
+│   ├── data-persistence.spec.ts
+│   └── responsive.spec.ts
+├── public/                  # Static assets
+├── .husky/                  # Husky configuration
+├── .github/                 # Github workflow configuration
+├── vite.config.ts           # Vite configuration
+├── tailwind.config.js       # Tailwind CSS configuration
+├── playwright.config.ts     # Playwright testing configuration
+├── tsconfig.json            # TypeScript configuration
+└── package.json             # Project dependencies and scripts
+```
+
+## Available Scripts
+
+- `npm run dev` - Start the development server
+- `npm run build` - Build the production version
+- `npm run preview` - Preview the production build locally
+- `npm run test` - Run Playwright tests
+- `npm run test:ui` - Open Playwright UI mode
+
+## Testing
+
+This project uses Playwright for end-to-end testing. The test suite covers:
+
+- Basic functionality (CRUD operations)
+- Form validation
+- Data persistence
+- Responsive design
+- Complex workflows (multiple items, discounts)
+
+To run the tests:
+
+```bash
+# Install Playwright browsers first (one-time setup)
+npx playwright install
+
+# Run the tests
+npm run test
+
+# Open Playwright UI mode
+npm run test:ui
+```
+
+## Best Practices Implemented
+
+- Responsive design for all device sizes
+- Form validation using Zod schemas
+- Persistent state management with Zustand
+- Component-based architecture
+- TypeScript for type safety
+- Comprehensive testing with Playwright
+- Modern React patterns (hooks, functional components)
+- Optimized build with Vite
 
 ## License
 

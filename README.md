@@ -2,8 +2,6 @@
 
 A simple yet functional sales management application built with **React**, **TypeScript**, **Zod**, **Zustand**, **React Hook Form**, and **Tailwind CSS** (ShadCN UI components). This app allows users to manage sales records, including invoice details, itemized sales, and discounts.
 
----
-
 ## 📦 Features
 
 - ✅ Add new sales with invoice details and itemized products
@@ -12,11 +10,10 @@ A simple yet functional sales management application built with **React**, **Typ
 - ✅ Real-time form validation using `Zod` and `React Hook Form`
 - ✅ Persistent local storage with `Zustand + persist` middleware
 
----
 
 ## 🛠️ Tech Stack
 
-- **Framework**: React 18 with TypeScript
+- **Framework**: React with TypeScript
 - **State Management**: Zustand with persist middleware
 - **Form Handling**: React Hook Form with Zod validation
 - **UI Components**: shadcn/ui component library
@@ -25,7 +22,6 @@ A simple yet functional sales management application built with **React**, **Typ
 - **Build Tool**: Vite
 - **Testing**: Playwright for E2E testing
 
----
 
 ## 🚀 Getting Started
 
@@ -137,6 +133,10 @@ npm run test:ui
 - Comprehensive testing with Playwright
 - Modern React patterns (hooks, functional components)
 - Optimized build with Vite
+
+## Live Demo
+
+The application is deployed on Vercel and can be accessed at: [https://sales-management-eight.vercel.app/](https://sales-management-eight.vercel.app)
 
 ## License
 

@@ -40,8 +40,8 @@ A simple yet functional sales management application built with **React**, **Typ
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/vhermawan/purchase-list
-cd purchase-list
+git clone https://github.com/vhermawan/sales-management-app.git
+cd sales-management-app
 ```
 
 2. Install dependencies:

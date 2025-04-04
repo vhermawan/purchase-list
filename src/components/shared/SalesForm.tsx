@@ -304,7 +304,9 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                 </span>
               </div>
 
-              <p>* Note: Grand total must be greater equal than 0</p>
+              <p className="italic">
+                * Note: Grand total must be greater equal than Rp 0
+              </p>
 
               <div className="flex justify-end gap-2">
                 <Button type="submit" disabled={grandTotal < 0}>

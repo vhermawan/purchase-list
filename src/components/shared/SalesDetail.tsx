@@ -118,10 +118,10 @@ export function SalesDetail({ index, onBack }: SalesDetailProps) {
               <span>Subtotal</span>
               <span>Rp {calculateSubtotal().toLocaleString('id-ID')}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-red-500">
               <span>Discount</span>
               <span data-testid="discount-total">
-                Rp {sale.discount.toLocaleString('id-ID')}
+                -Rp {sale.discount.toLocaleString('id-ID')}
               </span>
             </div>
             <div className="flex justify-between font-bold">

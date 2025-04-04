@@ -256,7 +256,7 @@ test.describe('Sales Management App E2E Tests', () => {
 
     await expect(page.getByText('Discount')).toBeVisible()
     await expect(page.getByTestId('discount-total')).toHaveText(
-      `Rp ${Number(discount).toLocaleString('id-ID')}`,
+      `-Rp ${Number(discount).toLocaleString('id-ID')}`,
     )
     await expect(page.getByTestId('grand-total')).toHaveText(
       `Rp ${grandTotal.toLocaleString('id-ID')}`,

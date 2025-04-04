@@ -57,8 +57,6 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
     name: 'items',
   })
 
-  // console.log(items)
-
   const grandTotal = () => {
     const items = form.watch('items')
     const discount = form.watch('discount') || 0

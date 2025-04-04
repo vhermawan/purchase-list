@@ -68,17 +68,17 @@ sales-management-app/
 │   ├── components/          # UI components
 │   │   ├── ui/              # shadcn/ui components
 |   |   ├── shared/          # for shared component
-│   │   |   ├── ConfirmationDialog.tsx   	# Dialog for confirmation to action
-│   │   |   ├── SalesForm.tsx   					# Form for creating/editing sales
-│   │   |   ├── SalesList.tsx   					# Table listing all sales
-│   │   |   └── SalesDetail.tsx 					# Detailed view of a sale
+│   │   |   ├── ConfirmationDialog.tsx # Dialog for confirmation action
+│   │   |   ├── SalesForm.tsx   			 # Form for creating/editing sales
+│   │   |   ├── SalesList.tsx   			 # Table listing all sales
+│   │   |   └── SalesDetail.tsx 			 # Detailed view of a sale
 │   ├── lib/                 # Utilities and state management
 │   │   ├── schema.ts        # Zod validation schemas
-│   │   ├── utils.ts         # Utils for helper
+│   │   ├── utils.ts         # Utils for helper function
 │   │   └── store.ts         # Zustand store with persistence
 │   ├── pages/               # Pages of app
-│   │   └── home/            # Home page directory
-│   │   |   └── index.tsx 					# Homepage application component
+│   │   └── home/            # Home page component
+│   │   |   └── index.tsx 	 
 │   ├── App.tsx              # Main application component
 │   └── main.tsx             # Application entry point
 ├── tests/                   # Playwright E2E tests

@@ -30,7 +30,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
   const { addSale, updateSale, getSale } = useSalesStore()
   const editSale = editIndex !== undefined ? getSale(editIndex) : undefined
 
-  const initialSale = useMemo(() => {
+  const defaultValues = useMemo(() => {
     if (!editSale) return null
 
     return {
@@ -39,17 +39,15 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
     }
   }, [editSale])
 
-  const defaultValues: Partial<SalesData> = initialSale || {
-    invoiceCode: '',
-    invoiceDate: new Date(),
-    items: [{ productName: '', qty: 1, price: 0 }],
-    discount: 0,
-  }
-
   const form = useForm<SalesData>({
     reValidateMode: 'onChange',
     resolver: zodResolver(salesSchema),
-    defaultValues,
+    defaultValues: defaultValues || {
+      invoiceCode: '',
+      invoiceDate: new Date(),
+      items: [{ productName: '', qty: 1, price: 0 }],
+      discount: 0,
+    },
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -58,12 +56,11 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
   })
 
   const items = form.watch('items')
-  const discount = form.watch('discount') || 0
   const subtotal = items.reduce((sum, item) => {
     return sum + (Number(item.qty) || 0) * (Number(item.price) || 0)
   }, 0)
 
-  const grandTotal = subtotal - discount
+  const grandTotal = subtotal - form.watch('discount')
 
   const onSubmit = (data: SalesData) => {
     if (editIndex !== undefined) {
@@ -79,7 +76,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
     }
   }
 
-  function formatRupiah(value: number | string): string {
+  const formatRupiah = (value: number | string) => {
     const number = typeof value === 'string' ? parseInt(value) : value
     if (isNaN(number)) return 'Rp 0'
 
@@ -89,7 +86,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
   const minDate = new Date('2020-01-01')
 
   return (
-    <div>
+    <>
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-2xl font-bold">
           {type === 'edit' ? 'Edit Sale' : 'New Sale'}
@@ -318,6 +315,6 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
           </Form>
         </CardContent>
       </Card>
-    </div>
+    </>
   )
 }

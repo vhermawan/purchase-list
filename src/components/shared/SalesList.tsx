@@ -1,5 +1,5 @@
 import { useSalesStore } from '@/lib/store'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -7,14 +7,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../ui/table'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+} from '@/components/ui/table'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Eye, List, Pencil, Trash } from 'lucide-react'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { ConfirmationDialog } from './ConfirmationDialog'
 import { useState } from 'react'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { toast } from '@/hooks/use-toast'
 
 interface SalesListProps {
   onEdit: (index: number) => void
@@ -155,6 +160,7 @@ export function SalesList({ onEdit, onView, onHandleAddNew }: SalesListProps) {
             onConfirm={() => {
               setConfirmationDialog({ index: -1, isOpen: false })
               deleteSale(confirmationDialog.index)
+              toast({ title: 'Sale deleted successfully' })
             }}
             onCancel={() => setConfirmationDialog({ index: -1, isOpen: false })}
             title="Delete Sale"

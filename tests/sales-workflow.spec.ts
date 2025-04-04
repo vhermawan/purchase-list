@@ -169,6 +169,10 @@ test.describe('Sales Management App E2E Tests', () => {
     const rowsAfter = await page.locator('tbody tr').count()
     expect(rowsAfter).toBe(rowsBefore - 1)
 
+    await expect(page.getByTestId('toast-title')).toHaveText(
+      'Sale deleted successfully',
+    )
+
     if (rowsAfter === 0) {
       await expect(page.getByText('No sales data available')).toBeVisible()
     }
@@ -222,10 +226,8 @@ test.describe('Sales Management App E2E Tests', () => {
   })
 
   test('should apply discount to sale', async ({ page }) => {
-    // Navigate to new sale form
     await page.getByRole('button', { name: 'Add New Sale' }).click()
 
-    // Fill the form with a discount
     await page.getByLabel('Invoice Code').fill(testSale.invoiceCode)
 
     await page.getByTestId('date-picker-btn').click()
@@ -244,13 +246,10 @@ test.describe('Sales Management App E2E Tests', () => {
     const discount = '50'
     await page.getByLabel('Discount').fill(discount)
 
-    // Submit the form
     await page.getByRole('button', { name: 'Add Sale' }).click()
 
-    // View sale details
     await page.getByTestId('btn-detail').first().click()
 
-    // Verify discount is applied and total is correct
     const subtotal = Number(testSale.qty) * Number(testSale.price)
     const grandTotal = subtotal - Number(discount)
 

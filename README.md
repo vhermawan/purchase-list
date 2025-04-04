@@ -56,8 +56,8 @@ pnpm i
 npm run dev
 # or
 yarn dev
-#
-or pnpm dev
+# or 
+pnpm dev
 ```
 
 4. Open your browser and navigate to `http://localhost:5173`

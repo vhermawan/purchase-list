@@ -115,10 +115,10 @@ To run the tests:
 npx playwright install
 
 # Run the tests
-npm run test
+pnpm test
 
 # Open Playwright UI mode
-npm run test:ui
+pnpm test:ui
 ```
 
 ## Best Practices Implemented

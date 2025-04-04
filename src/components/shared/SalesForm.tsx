@@ -57,15 +57,13 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
     name: 'items',
   })
 
-  const grandTotal = () => {
-    const items = form.watch('items')
-    const discount = form.watch('discount') || 0
-    const subtotal = items.reduce((sum, item) => {
-      return sum + (Number(item.qty) || 0) * (Number(item.price) || 0)
-    }, 0)
+  const items = form.watch('items')
+  const discount = form.watch('discount') || 0
+  const subtotal = items.reduce((sum, item) => {
+    return sum + (Number(item.qty) || 0) * (Number(item.price) || 0)
+  }, 0)
 
-    return subtotal - discount
-  }
+  const grandTotal = subtotal - discount
 
   const onSubmit = (data: SalesData) => {
     if (editIndex !== undefined) {
@@ -290,6 +288,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                           const numeric = Number(rawValue)
                           field.onChange(numeric)
                         }}
+                        disabled={subtotal <= 0}
                       />
                     </FormControl>
                     <FormMessage />
@@ -299,13 +298,19 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
 
               <div className="flex justify-between items-center p-4 bg-gray-50 rounded-md">
                 <span className="font-medium">Grand Total:</span>
-                <span className="text-lg font-bold">
-                  Rp {grandTotal().toLocaleString('id-ID')}
+                <span
+                  className={cn('text-lg font-bold', {
+                    'text-red-500': grandTotal < 0,
+                  })}
+                >
+                  Rp {grandTotal.toLocaleString('id-ID')}
                 </span>
               </div>
 
+              <p>* Note: Grand total must be greater equal than 0</p>
+
               <div className="flex justify-end gap-2">
-                <Button type="submit">
+                <Button type="submit" disabled={grandTotal < 0}>
                   {editIndex !== undefined ? 'Update Sale' : 'Add Sale'}
                 </Button>
               </div>

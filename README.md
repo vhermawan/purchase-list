@@ -68,12 +68,17 @@ sales-management-app/
 │   ├── components/          # UI components
 │   │   ├── ui/              # shadcn/ui components
 |   |   ├── shared/          # for shared component
-│   │   |   ├── sales-form.tsx   # Form for creating/editing sales
-│   │   |   ├── sales-list.tsx   # Table listing all sales
-│   │   |   └── sales-detail.tsx # Detailed view of a sale
+│   │   |   ├── ConfirmationDialog.tsx   	# Dialog for confirmation to action
+│   │   |   ├── SalesForm.tsx   					# Form for creating/editing sales
+│   │   |   ├── SalesList.tsx   					# Table listing all sales
+│   │   |   └── SalesDetail.tsx 					# Detailed view of a sale
 │   ├── lib/                 # Utilities and state management
 │   │   ├── schema.ts        # Zod validation schemas
+│   │   ├── utils.ts         # Utils for helper
 │   │   └── store.ts         # Zustand store with persistence
+│   ├── pages/               # Pages of app
+│   │   └── home/            # Home page directory
+│   │   |   └── index.tsx 					# Homepage application component
 │   ├── App.tsx              # Main application component
 │   └── main.tsx             # Application entry point
 ├── tests/                   # Playwright E2E tests
@@ -92,11 +97,11 @@ sales-management-app/
 
 ## Available Scripts
 
-- `npm run dev` - Start the development server
-- `npm run build` - Build the production version
-- `npm run preview` - Preview the production build locally
-- `npm run test` - Run Playwright tests
-- `npm run test:ui` - Open Playwright UI mode
+- `pnpm dev` - Start the development server
+- `pnpm build` - Build the production version
+- `pnpm preview` - Preview the production build locally
+- `pnpm test` - Run Playwright tests
+- `pnpm test:ui` - Open Playwright UI mode
 
 ## Testing
 
@@ -111,9 +116,6 @@ This project uses Playwright for end-to-end testing. The test suite covers:
 To run the tests:
 
 ```bash
-# Install Playwright browsers first (one-time setup)
-npx playwright install
-
 # Run the tests
 pnpm test
 

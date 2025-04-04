@@ -9,11 +9,12 @@ import {
   TableRow,
 } from '../ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
-import { Eye, Pencil, Trash } from 'lucide-react'
+import { Eye, List, Pencil, Trash } from 'lucide-react'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { ConfirmationDialog } from './ConfirmationDialog'
 import { useState } from 'react'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 interface SalesListProps {
   onEdit: (index: number) => void
@@ -38,7 +39,7 @@ export function SalesList({ onEdit, onView, onHandleAddNew }: SalesListProps) {
   }
 
   return (
-    <div>
+    <>
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-2xl font-bold">Sales Data</h2>
         <Button onClick={onHandleAddNew}>Add New Sale</Button>
@@ -78,32 +79,70 @@ export function SalesList({ onEdit, onView, onHandleAddNew }: SalesListProps) {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          data-testid="btn-detail"
-                          onClick={() => onView(index)}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          data-testid="btn-edit"
-                          onClick={() => onEdit(index)}
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          size="icon"
-                          data-testid="btn-delete"
-                          onClick={() =>
-                            setConfirmationDialog({ index, isOpen: true })
-                          }
-                        >
-                          <Trash className="h-4 w-4" />
-                        </Button>
+                        <div className="block sm:hidden">
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button variant="outline" size="icon">
+                                <List className="h-4 w-4" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-max flex flex-col bg-white p-2 gap-2">
+                              <Button
+                                size="sm"
+                                className="w-max"
+                                variant="outline"
+                                onClick={() => onView(index)}
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => onEdit(index)}
+                              >
+                                <Pencil className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                className="w-max"
+                                variant="destructive"
+                                onClick={() =>
+                                  setConfirmationDialog({ index, isOpen: true })
+                                }
+                              >
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                        <div className="hidden sm:flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            data-testid="btn-detail"
+                            onClick={() => onView(index)}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            data-testid="btn-edit"
+                            onClick={() => onEdit(index)}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            data-testid="btn-delete"
+                            onClick={() =>
+                              setConfirmationDialog({ index, isOpen: true })
+                            }
+                          >
+                            <Trash className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -123,6 +162,6 @@ export function SalesList({ onEdit, onView, onHandleAddNew }: SalesListProps) {
           />
         </CardContent>
       </Card>
-    </div>
+    </>
   )
 }

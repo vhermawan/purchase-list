@@ -7,12 +7,12 @@ export const itemSchema = z.object({
     .max(32, 'Product name must be 32 characters or less'),
   qty: z
     .number()
-    .min(1, 'Quantity must be between 1 and 1000')
-    .max(1000, 'Quantity must be between 1 and 1000'),
+    .gte(1, 'Quantity must be between 1 and 1000')
+    .lte(1000, 'Quantity must be between 1 and 1000'),
   price: z
     .number()
-    .min(1, 'Price must be between 1 and 1,000,000')
-    .max(1000000, 'Price must be between 1 and 1,000,000'),
+    .gte(1, 'Price must be between 1 and 1,000,000')
+    .lte(1000000, 'Price must be between 1 and 1,000,000'),
 })
 
 export const salesSchema = z.object({

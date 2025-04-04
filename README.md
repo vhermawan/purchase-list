@@ -10,7 +10,6 @@ A simple yet functional sales management application built with **React**, **Typ
 - ✅ Real-time form validation using `Zod` and `React Hook Form`
 - ✅ Persistent local storage with `Zustand + persist` middleware
 
-
 ## 🛠️ Tech Stack
 
 - **Framework**: React with TypeScript
@@ -21,7 +20,6 @@ A simple yet functional sales management application built with **React**, **Typ
 - **Icons**: Lucide React
 - **Build Tool**: Vite
 - **Testing**: Playwright for E2E testing
-
 
 ## 🚀 Getting Started
 
@@ -56,7 +54,7 @@ pnpm i
 npm run dev
 # or
 yarn dev
-# or 
+# or
 pnpm dev
 ```
 

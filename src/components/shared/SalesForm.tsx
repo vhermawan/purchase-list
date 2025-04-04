@@ -105,22 +105,20 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                 <FormField
                   control={form.control}
                   name="invoiceCode"
-                  render={({ field, formState }) => (
+                  render={({ field }) => (
                     <FormItem>
                       <FormLabel>Invoice Code</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="INV-001"
                           className={cn({
-                            'border border-red-500':
-                              formState.errors.invoiceCode,
+                            'border-red-500':
+                              !!form.formState.errors.invoiceCode,
                           })}
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage>
-                        {formState.errors.invoiceCode?.message}
-                      </FormMessage>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -128,7 +126,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                 <FormField
                   control={form.control}
                   name="invoiceDate"
-                  render={({ field, formState }) => (
+                  render={({ field }) => (
                     <FormItem>
                       <FormLabel>Invoice Date</FormLabel>
                       <FormControl>
@@ -144,9 +142,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                           dataTestIdCalendar="Invoice Date"
                         />
                       </FormControl>
-                      <FormMessage>
-                        {formState.errors.invoiceDate?.message}
-                      </FormMessage>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -174,26 +170,21 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                       <FormField
                         control={form.control}
                         name={`items.${index}.productName`}
-                        render={({ field, formState }) => (
+                        render={({ field }) => (
                           <FormItem>
                             <FormLabel>Product Name</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="Product name"
                                 className={cn({
-                                  'border border-red-500':
-                                    formState.errors.items?.[index]
+                                  'border-red-500':
+                                    !!form.formState.errors.items?.[index]
                                       ?.productName,
                                 })}
                                 {...field}
                               />
                             </FormControl>
-                            <FormMessage>
-                              {
-                                formState.errors.items?.[index]?.productName
-                                  ?.message
-                              }
-                            </FormMessage>
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -201,7 +192,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                       <FormField
                         control={form.control}
                         name={`items.${index}.qty`}
-                        render={({ field, formState }) => (
+                        render={({ field }) => (
                           <FormItem>
                             <FormLabel>Quantity</FormLabel>
                             <FormControl>
@@ -213,14 +204,12 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                                   field.onChange(maskingNumber(e.target.value))
                                 }
                                 className={cn({
-                                  'border border-red-500':
-                                    formState.errors.items?.[index]?.qty,
+                                  'border-red-500':
+                                    !!form.formState.errors.items?.[index]?.qty,
                                 })}
                               />
                             </FormControl>
-                            <FormMessage>
-                              {formState.errors.items?.[index]?.qty?.message}
-                            </FormMessage>
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -228,7 +217,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                       <FormField
                         control={form.control}
                         name={`items.${index}.price`}
-                        render={({ field, formState }) => (
+                        render={({ field }) => (
                           <FormItem>
                             <FormLabel>Price</FormLabel>
                             <div className="flex items-center gap-2">
@@ -239,8 +228,9 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                                   {...field}
                                   value={formatRupiah(field.value)}
                                   className={cn({
-                                    'border border-red-500':
-                                      formState.errors.items?.[index]?.price,
+                                    'border-red-500':
+                                      !!form.formState.errors.items?.[index]
+                                        ?.price,
                                   })}
                                   onChange={(e) =>
                                     field.onChange(
@@ -260,9 +250,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                                 </Button>
                               )}
                             </div>
-                            <FormMessage>
-                              {formState.errors.items?.[index]?.price?.message}
-                            </FormMessage>
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
@@ -277,7 +265,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
               <FormField
                 control={form.control}
                 name="discount"
-                render={({ field, formState }) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>Discount</FormLabel>
                     <FormControl>
@@ -286,6 +274,9 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                         placeholder="Discount"
                         {...field}
                         value={formatRupiah(field.value)}
+                        className={cn({
+                          'border-red-500': !!form.formState.errors.discount,
+                        })}
                         onChange={(e) => {
                           const rawValue = e.target.value.replace(/[^0-9]/g, '')
                           const numeric = Number(rawValue)
@@ -293,9 +284,7 @@ export function SalesForm({ editIndex, handleBack, type }: SalesFormProps) {
                         }}
                       />
                     </FormControl>
-                    <FormMessage>
-                      {formState.errors.discount?.message}
-                    </FormMessage>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
